@@ -44,13 +44,14 @@ class WebSocketServiceImpl : WebSocketListener(), WebSocketService {
     }
 
     override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
+        Log.d(TAG, "onFailure() : Response : ${response?.toString()}")
         Log.d(TAG, "onFailure() : Throwable : ${t.message}")
     }
 
     override fun connect(socketUrl:String?) {
         val request: Request = Request.Builder().url(socketUrl!!).build()
         ws = okHttpClient.newWebSocket(request, this)
-        Log.d(TAG, "connect()")
+        Log.d(TAG, "connect(): url: $socketUrl")
     }
 
     override fun send(message: JSONObject?) {
@@ -61,7 +62,7 @@ class WebSocketServiceImpl : WebSocketListener(), WebSocketService {
     }
 
     override fun cancel() {
-        ws!!.cancel()
+        ws?.cancel()
         Log.d(TAG, "cancel()")
     }
 
